@@ -9,6 +9,20 @@ from lxml import etree
 
 cookie = os.environ.get("cookie_enshan")
 
+def send_message(content):
+    api_url = 'https://wxpusher.zjiecode.com/api/send/message'
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    data = {
+        "appToken": "AT_uYfKbWHkCwomUV4cz4AASjI85XGpSvP3",
+        "content": content,
+        "contentType": 1,
+        "topicIds": [32226]
+    }
+    response = requests.post(api_url, headers=headers, data=json.dumps(data))
+    return response.json()
+
 def run(*arg):
     msg = ""
     s = requests.Session()
@@ -54,6 +68,8 @@ def main(*arg):
         msg += run(cookie)
         i += 1
     print(msg[:-1])
+    log = send_message(msg)
+    print(log)
     return msg[:-1]
 
 
